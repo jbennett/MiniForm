@@ -56,9 +56,7 @@ module MiniForm
       Hash[self.class.attribute_names.map { |name| [name, public_send(name)] }]
     end
 
-    def update(attributes = {})
-      self.attributes = attributes unless attributes.empty?
-
+    def save
       return false unless valid?
 
       run_callbacks :update do
@@ -69,6 +67,12 @@ module MiniForm
       end
 
       true
+    end
+
+    def update(attributes = {})
+      self.attributes = attributes unless attributes.empty?
+
+      save
     end
 
     def update!(attributes = {})
